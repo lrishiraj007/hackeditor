@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-dark: #0a0e17;
+  --bg-card: #111827;
+  --bg-card-inner: #1a2236;
+  --cyan-primary: #00e5c8;
+  --cyan-light: #00ffd5;
+  --cyan-glow: rgba(0, 229, 200, 0.3);
+  --cyan-deep: #00b8a0;
+  --text-primary: #e0e8f0;
+  --text-secondary: #8899aa;
+  --border-dark: #1e2d3d;
+  --toolbar-bg: #0d1520;
+  --editor-bg: #f5f5f5;
+  --editor-text: #333;
+  --shadow-cyan: 0 0 20px rgba(0, 229, 200, 0.15);
+  --shadow-deep: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 229, 200, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 229, 200, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(0, 100, 200, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}

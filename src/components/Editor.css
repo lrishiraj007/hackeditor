@@ -1,0 +1,376 @@
+/* ========================================
+   HACKEDITOR - Cyberpunk Rich Text Editor
+   ======================================== */
+
+/* Container */
+.hackeditor-container {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+}
+
+/* Background Grid */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 229, 200, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 200, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+  animation: gridPulse 8s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Title */
+.hackeditor-title {
+  font-family: 'Orbitron', 'Inter', sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--cyan-primary);
+  text-align: center;
+  letter-spacing: 6px;
+  text-shadow:
+    0 0 10px rgba(0, 229, 200, 0.5),
+    0 0 30px rgba(0, 229, 200, 0.3),
+    0 0 60px rgba(0, 229, 200, 0.15);
+  animation: titleGlow 3s ease-in-out infinite alternate;
+  user-select: none;
+}
+
+@keyframes titleGlow {
+  0% {
+    text-shadow:
+      0 0 10px rgba(0, 229, 200, 0.5),
+      0 0 30px rgba(0, 229, 200, 0.3),
+      0 0 60px rgba(0, 229, 200, 0.15);
+  }
+  100% {
+    text-shadow:
+      0 0 15px rgba(0, 229, 200, 0.7),
+      0 0 40px rgba(0, 229, 200, 0.45),
+      0 0 80px rgba(0, 229, 200, 0.2),
+      0 0 120px rgba(0, 229, 200, 0.1);
+  }
+}
+
+/* Toolbar */
+.toolbar {
+  width: 100%;
+  background: linear-gradient(145deg, #0b1220, #0f1a2e);
+  border: 1px solid rgba(0, 229, 200, 0.15);
+  border-radius: 50px;
+  padding: 6px;
+  box-shadow:
+    var(--shadow-deep),
+    inset 0 1px 0 rgba(0, 229, 200, 0.08),
+    0 0 30px rgba(0, 229, 200, 0.05);
+}
+
+.toolbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 8px;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 229, 200, 0.2),
+    transparent
+  );
+  margin: 0 6px;
+}
+
+/* Toolbar Buttons */
+.toolbar-btn {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  /* Teal 3D pill style */
+  background: linear-gradient(
+    145deg,
+    #0cc8a8 0%,
+    #0aad92 30%,
+    #089b82 60%,
+    #068a73 100%
+  );
+  box-shadow:
+    0 4px 12px rgba(0, 229, 200, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  color: #0a0e17;
+}
+
+.toolbar-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+/* Scanline overlay for cyber feel */
+.toolbar-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+}
+
+.toolbar-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: linear-gradient(
+    145deg,
+    #0ee0be 0%,
+    #0cc8a8 30%,
+    #0aad92 60%,
+    #089b82 100%
+  );
+  box-shadow:
+    0 6px 20px rgba(0, 229, 200, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(0, 229, 200, 0.15);
+}
+
+.toolbar-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow:
+    0 2px 6px rgba(0, 229, 200, 0.15),
+    inset 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.toolbar-btn.active {
+  background: linear-gradient(
+    145deg,
+    var(--cyan-light) 0%,
+    var(--cyan-primary) 40%,
+    #00c4aa 100%
+  );
+  box-shadow:
+    0 4px 16px rgba(0, 229, 200, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+    0 0 40px rgba(0, 229, 200, 0.2);
+  color: #04080f;
+}
+
+.toolbar-btn.active::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 50%
+  );
+}
+
+/* Button icons */
+.btn-icon {
+  font-size: 1.05rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.bold-icon {
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+
+.italic-icon {
+  font-style: italic;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.15rem;
+}
+
+.underline-icon {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.align-icon svg {
+  display: block;
+}
+
+/* Editor Wrapper */
+.editor-wrapper {
+  width: 100%;
+  background: var(--editor-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    var(--shadow-deep),
+    0 0 0 1px rgba(0, 229, 200, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.editor-wrapper:focus-within {
+  box-shadow:
+    var(--shadow-deep),
+    0 0 0 2px rgba(0, 229, 200, 0.3),
+    0 0 40px rgba(0, 229, 200, 0.08);
+}
+
+/* Editor Area */
+.editor-area {
+  min-height: 220px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 20px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--editor-text);
+  outline: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.editor-area:empty::before {
+  content: attr(data-placeholder);
+  color: #aab0b8;
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* Scrollbar styling */
+.editor-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.editor-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.editor-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 229, 200, 0.3);
+  border-radius: 3px;
+}
+
+.editor-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 229, 200, 0.5);
+}
+
+/* Status Bar */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.status-bar:hover {
+  opacity: 0.8;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan-primary);
+  box-shadow: 0 0 8px var(--cyan-glow);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.status-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Orbitron', 'Inter', sans-serif;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hackeditor-container {
+    padding: 24px 16px;
+    gap: 18px;
+  }
+
+  .hackeditor-title {
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+
+  .toolbar-inner {
+    gap: 5px;
+    padding: 2px 4px;
+  }
+
+  .toolbar-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .btn-icon {
+    font-size: 0.9rem;
+  }
+
+  .bold-icon {
+    font-size: 1rem;
+  }
+
+  .italic-icon {
+    font-size: 1rem;
+  }
+
+  .align-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .editor-area {
+    min-height: 160px;
+    padding: 16px 18px;
+    font-size: 0.95rem;
+  }
+}
